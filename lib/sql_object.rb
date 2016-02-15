@@ -1,11 +1,24 @@
 require_relative 'db_connection'
 require_relative 'searchable'
 require_relative 'associatable'
+require_relative 'attr_accessor_object'
 require 'active_support/inflector'
 
 class SQLObject
   extend Searchable
   extend Associatable
+
+  def self.create_attr_accessor(*attr_names)
+    attr_names.each do |name|
+      define_method(name) do
+        instance_variable_get("@#{name}")
+      end
+
+      define_method("#{name}=") do |new_value|
+        instance_variable_set("@#{name}", new_value)
+      end
+    end
+  end
 
   def self.columns
     return @columns if @columns
@@ -70,6 +83,8 @@ class SQLObject
       unless self.class.columns.include?(attr_name)
         raise "unknown attribute '#{attr_name}'"
       end
+      self.class.create_attr_accessor(attr_name)
+
       send("#{attr_name}=", value)
     end
 
