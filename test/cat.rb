@@ -9,10 +9,11 @@ class Cat < SQLObject
     foreign_key: :owner_id,
     class_name: "Human"
     )
+
   has_one_through(
-  :home,
-  :owner,
-  :house
+    :home,
+    :owner,
+    :house
   )
 
 end
@@ -32,7 +33,7 @@ end
 class House < SQLObject
   self.finalize!
   has_many :humans
-  
+
 end
 
 # c.name = "John"

@@ -11,7 +11,7 @@ module Searchable
   def includes(*associations)
     relation = RecLiteRelation.new(self)
     associations.each do |association|
-      relation.included_models << association
+      relation.eager_load(association)
     end
     relation
   end
