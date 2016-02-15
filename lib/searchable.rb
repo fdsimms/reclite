@@ -5,11 +5,14 @@ require 'byebug'
 
 module Searchable
   def where(params)
-
     RecLiteRelation.new(self, params)
   end
-end
 
-class SQLObject
-  extend Searchable
+  def includes(*associations)
+    relation = RecLiteRelation.new(self)
+    associations.each do |association|
+      relation.included_models << association
+    end
+    relation
+  end
 end

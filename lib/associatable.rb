@@ -3,9 +3,15 @@ require 'byebug'
 require_relative "has_many_options"
 
 module Associatable
+  def association_options
+    @association_options ||= {}
+    @association_options
+  end
+
   def has_one_through(name, through_name, source_name)
     define_method(name) do
-      through_options = association_options[through_name]
+      debugger
+      through_options = self.class.association_options[through_name]
       through_class = through_options.model_class
       source_options = through_class.association_options[source_name]
 
@@ -45,7 +51,4 @@ module Associatable
     end
   end
 
-  def association_options
-    @association_options ||= {}
-  end
 end
