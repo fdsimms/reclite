@@ -13,7 +13,7 @@ end
 
 class Human < SQLObject
   self.table_name = "humans"
-
+  has_many :cats
 end
 
 # c.name = "John"

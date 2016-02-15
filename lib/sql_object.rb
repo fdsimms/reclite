@@ -76,6 +76,35 @@ class SQLObject
     parse_all(results).first
   end
 
+  def self.find(id)
+    results = DBConnection.execute(<<-SQL, id)
+      SELECT * FROM #{table_name} WHERE id = ? LIMIT 1
+    SQL
+
+    parse_all(results).first
+  end
+
+  def self.find_by(attr_name, value)
+    debugger
+    attr_name = attr_name.to_s
+    results = DBConnection.execute(<<-SQL, value)
+      SELECT * FROM #{table_name} WHERE #{attr_name} = ? LIMIT 1
+    SQL
+
+    parse_all(results).first
+  end
+
+  def self.method_missing(method_name, value)
+    method_name = method_name.to_s
+
+    if method_name.start_with?("find_by_")
+      attr_name = method_name["find_by_".length..-1].to_sym
+      self.find_by(attr_name, value)
+    else
+      super
+    end
+  end
+
   def initialize(params = {})
 
     params.each do |attr_name, value|
@@ -83,6 +112,7 @@ class SQLObject
       unless self.class.columns.include?(attr_name)
         raise "unknown attribute '#{attr_name}'"
       end
+
       self.class.create_attr_accessor(attr_name)
 
       send("#{attr_name}=", value)
