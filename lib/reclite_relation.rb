@@ -26,4 +26,14 @@ class RecLiteRelation
 
     @model.parse_all(results)
   end
+
+  def method_missing(method_name, *args)
+    if args.length === 0
+      execute_query.send(method_name)
+    elsif args.length === 1
+      execute_query.send(method_name, args.first)
+    else
+      execute_query.send(method_name, *args)
+    end
+  end
 end
