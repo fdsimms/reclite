@@ -7,19 +7,6 @@ class SQLObject
   extend Searchable
   extend Associatable
 
-#TODO make this into a method_missing thing TODO
-  # def self.create_attr_accessor(*attr_names)
-  #   attr_names.each do |name|
-  #     define_method(name) do
-  #       instance_variable_get("@#{name}")
-  #     end
-  #
-  #     define_method("#{name}=") do |new_value|
-  #       instance_variable_set("@#{name}", new_value)
-  #     end
-  #   end
-  # end
-
   def self.columns
     return @columns if @columns
 
