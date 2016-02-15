@@ -3,6 +3,7 @@ require_relative '../lib/searchable.rb'
 require_relative '../lib/associatable.rb'
 
 class Cat < SQLObject
+  self.finalize!
   belongs_to(
     :owner,
     foreign_key: :owner_id,
@@ -13,7 +14,12 @@ end
 
 class Human < SQLObject
   self.table_name = "humans"
-  has_many :cats
+  self.finalize!
+  has_many(
+    :cats,
+    foreign_key: :owner_id,
+    class_name: "Cat"
+  )
 end
 
 # c.name = "John"
@@ -23,4 +29,5 @@ end
 # puts Cat.columns
 # print Cat.where({owner_id: 3})
 # print Cat.where({owner_id: 3}).where({name: "Markov"})
-print Cat.where({owner_id: 3})[0].owner
+# print Cat.where({owner_id: 3})
+# print Human.find(3).cats

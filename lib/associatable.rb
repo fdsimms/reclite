@@ -5,9 +5,9 @@ require_relative "has_many_options"
 module Associatable
   def has_one_through(name, through_name, source_name)
     define_method(name) do
-      through_options = self.class.assoc_options[through_name]
+      through_options = association_options[through_name]
       through_class = through_options.model_class
-      source_options = through_class.assoc_options[source_name]
+      source_options = through_class.association_options[source_name]
 
       through_foreign_key = through_options.send(:foreign_key)
       through_object =
@@ -22,7 +22,7 @@ module Associatable
   def belongs_to(name, options = {})
 
     options = BelongsToOptions.new(name, options)
-    # self.class.assoc_options[name] = options
+    association_options[name] = options
 
     define_method(name) do
       foreign_key = options.foreign_key
@@ -38,8 +38,10 @@ module Associatable
     define_method(name) do
       foreign_key = options.foreign_key
       model_class = options.send(:model_class)
+      where_options = {}
+      where_options[foreign_key] = self.id
 
-      model_class.where(foreign_key => self.id)
+      model_class.where(where_options)
     end
   end
 
