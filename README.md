@@ -43,5 +43,8 @@ RecLite is a lightweight ORM that implements the core functionality of ActiveRec
 ## Technologies
 
 * Ruby
-* [SQLite3][https://github.com/sparklemotion/sqlite3-ruby]
-* [ActiveSupport][https://github.com/rails/rails/tree/master/activesupport]
+* [SQLite3][sq]
+* [ActiveSupport][as]
+
+[as]: https://github.com/rails/rails/tree/master/activesupport
+[sq]: https://github.com/sparklemotion/sqlite3-ruby
