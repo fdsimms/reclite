@@ -4,6 +4,12 @@
 
 RecLite is a lightweight ORM that implements the core functionality of ActiveRecord, including relations and associations. It was built from the ground up using Ruby.
 
+## Getting Started
+
+Take a look at `create_db.sql` and you'll find some basic SQL for creating a database to use with RecLite. Feel free to modify it to create your own database. `database.db` is a prepopulated SQLite3 database, which you can delete if you want to create a new database.
+
+To populate the database file from the SQL file, make sure you have SQLite3 installed and type `sqlite3 database.db` followed by `.read create_db_sql` into the terminal. Check the SQLite3 documentation for more detail.
+
 ## SQLObject
 
 * Parent class for all RecLite model objects
