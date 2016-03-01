@@ -1,5 +1,4 @@
 require_relative "belongs_to_options"
-require 'byebug'
 require_relative "has_many_options"
 
 module Associatable
